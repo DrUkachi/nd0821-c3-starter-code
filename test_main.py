@@ -6,15 +6,14 @@ import pandas as pd
 from fastapi.testclient import TestClient
 from main import app, Features  # Assuming your FastAPI script is in main.py
 
+# get the base directory
 cwd = os.getcwd()
-parent_dir = os.path.dirname("model")
 
 # Name of the file you want to locate
-filename = "transformers.pkl"
+filename = r"model\transformers.pkl"
 
 # Construct the full path to the file in the parent directory
-file_path = os.path.join(parent_dir, filename)
-print(file_path)
+file_path = os.path.join(cwd, filename)
 
 
 # Load model and transformers for testing

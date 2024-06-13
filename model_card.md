@@ -25,9 +25,9 @@ The evaluation data was split from the training set, with an 80:20 split ratio.
 ## Metrics
 The metrics used to evaluate model performance are:
 
-- Precision: 0.7901
-- Recall: 0.6805
-- F-beta score: 0.7312
+- Precision: 0.793
+- Recall: 0.6626
+- F-beta score: 0.7162
 
 ## Ethical Considerations
 
