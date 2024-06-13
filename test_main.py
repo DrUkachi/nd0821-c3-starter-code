@@ -8,7 +8,6 @@ from main import app, Features  # Assuming your FastAPI script is in main.py
 
 cwd = os.getcwd()
 parent_dir = os.path.dirname("model")
-filepath = os.join()
 
 # Name of the file you want to locate
 filename = "transformers.pkl"

@@ -1,5 +1,6 @@
 # Put the code for your API here.
 import joblib
+import os
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -70,7 +71,19 @@ async def hello():
     return "Welcome! This is the Census Bureau Classifier API"
 
 
-model, encoder, lb = joblib.load("./model/transformer.pkl")
+cwd = os.getcwd()
+parent_dir = os.path.dirname("model")
+
+# Name of the file you want to locate
+filename = "transformers.pkl"
+
+# Construct the full path to the file in the parent directory
+file_path = os.path.join(parent_dir, filename)
+print(file_path)
+
+# Load model and transformers for testing
+model, encoder, lb = joblib.load(file_path)
+
 cat_features = [f for (f, t) in Features.__annotations__.items() if t == str]
 
 
