@@ -1,6 +1,7 @@
 import requests
 import json
 
+
 def send_prediction_request():
     """
     Sends a POST request to a web API endpoint with sample data and prints the response.
@@ -37,6 +38,7 @@ def send_prediction_request():
     # Print status code and result
     print("status_code:", response.status_code)
     print("result:", response.json())
+
 
 # Call the function to send the request
 send_prediction_request()

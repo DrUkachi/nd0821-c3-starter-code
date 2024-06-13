@@ -1,12 +1,11 @@
 # Put the code for your API here.
 import joblib
-
 import pandas as pd
-
 from fastapi import FastAPI
 from pydantic import BaseModel
 from starter.ml.data import process_data
 from starter.ml.model import inference
+
 
 class Features(BaseModel):
     age: int
@@ -24,10 +23,10 @@ class Features(BaseModel):
     hours_per_week: int
     native_country: str
 
-    model_config = { "json_schema" : {
+    model_config = {"json_schema": {
         "examples": [
             {
-                "age":39,
+                "age": 39,
                 "workclass": "State-gov",
                 "fnlgt": 77516,
                 "education": "Bachelors",
@@ -41,31 +40,29 @@ class Features(BaseModel):
                 "capital_loss": 0,
                 "hours_per_week": 40,
                 "native_country": "United-States"
-
             },
             {
-                'age':50,
-                'workclass':"Private", 
-                'fnlgt':234721,
-                'education':"Doctorate",
-                'education_num':16,
-                'marital_status':"Separated",
-                'occupation':"Exec-managerial",
-                'relationship':"Not-in-family",
-                'race':"Black",
-                'sex':"Female",
-                'capital_gain':0,
-                'capital_loss':0,
-                'hours_per_week':50,
-                'native_country':"United-States"
+                'age': 50,
+                'workclass': "Private",
+                'fnlgt': 234721,
+                'education': "Doctorate",
+                'education_num': 16,
+                'marital_status': "Separated",
+                'occupation': "Exec-managerial",
+                'relationship': "Not-in-family",
+                'race': "Black",
+                'sex': "Female",
+                'capital_gain': 0,
+                'capital_loss': 0,
+                'hours_per_week': 50,
+                'native_country': "United-States"
             }
         ]
-    } 
-
-    }
+    }}
 
 # Initiate the app
 app = FastAPI()
+
 
 # Define a GET method on the specified end-point
 @app.get("/")
@@ -74,16 +71,18 @@ async def hello():
 
 
 model, encoder, lb = joblib.load("./model/transformer.pkl")
-cat_features = [f for (f,t) in Features.__annotations__.items() if t==str]
+cat_features = [f for (f, t) in Features.__annotations__.items() if t == str]
+
 
 # Use Post action to send data to the API
 @app.post("/predict")
-async def predict(body:Features):
-    data = pd.DataFrame(body.__dict__,[0])
-    data, * _ = process_data(data, categorical_features=cat_features,
-                             training=False,
-                             encoder=encoder)
-    
+async def predict(body: Features):
+    data = pd.DataFrame(body.__dict__, [0])
+    data, *_ = process_data(
+        data, categorical_features=cat_features,
+        training=False,
+        encoder=encoder
+    )
     y_pred = inference(model, data)
 
     return lb.inverse_transform(y_pred)[0]

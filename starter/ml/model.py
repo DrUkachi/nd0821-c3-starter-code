@@ -19,14 +19,12 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-
     parameters = {
-    'n_estimators': [100, 250, 500, 1000],
-    'learning_rate': [0.01, 0.05, 0.1, 0.2],
-    'max_depth': [3, 5, 7, 10],
+        'n_estimators': [100, 250, 500, 1000],
+        'learning_rate': [0.01, 0.05, 0.1, 0.2],
+        'max_depth': [3, 5, 7, 10],
     }
 
-    
     f1_score = make_scorer(fbeta_score, beta=1, zero_division=1)
 
     classifier = GridSearchCV(GradientBoostingClassifier(random_state=102),
@@ -36,7 +34,7 @@ def train_model(X_train, y_train):
                               verbose=2,
                               refit=True,
                               scoring=f1_score)
-    
+
     classifier.fit(X_train, y_train)
 
     return classifier
@@ -65,11 +63,12 @@ def compute_model_metrics(y, preds):
 
 
 def inference(model, X):
-    """ Run model inferences and return the predictions.
+    """
+    Run model inferences and return the predictions.
 
     Inputs
     ------
-    model : ???
+    model : GradientBoostingClassifier
         Trained machine learning model.
     X : np.array
         Data used for prediction.
@@ -79,5 +78,4 @@ def inference(model, X):
         Predictions from the model.
     """
     y_pred = model.predict(X)
-
     return y_pred
