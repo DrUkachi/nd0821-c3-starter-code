@@ -1,8 +1,10 @@
+
 import numpy as np
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingClassifier
 from starter.ml.model import train_model, compute_model_metrics, inference
+
 
 def test_train_model():
     # Generate synthetic data
@@ -34,9 +36,10 @@ def test_compute_model_metrics():
     precision, recall, fbeta = compute_model_metrics(y_true, y_pred)
 
     # Validate the metrics
-    assert precision >= 0 and precision <= 1, "Precision score should be between 0 and 1"
-    assert recall >= 0 and recall <= 1, "Recall score should be between 0 and 1"
-    assert fbeta >= 0 and fbeta <= 1, "F-beta score should be between 0 and 1"
+    assert 0 <= precision <= 1, "Precision score should be between 0 and 1"
+    assert 0 <= recall <= 1, "Recall score should be between 0 and 1"
+    assert 0 <= fbeta <= 1, "F-beta score should be between 0 and 1"
+
 
 def test_inference():
     # Generate synthetic data

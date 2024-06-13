@@ -24,12 +24,6 @@ def train_model(X_train, y_train):
     'n_estimators': [100, 250, 500, 1000],
     'learning_rate': [0.01, 0.05, 0.1, 0.2],
     'max_depth': [3, 5, 7, 10],
-    'min_samples_split': [2, 5, 10, 15],
-    'min_samples_leaf': [1, 2, 5, 10],
-    'max_features': ['auto', 'sqrt', 'log2', None],
-    'subsample': [0.6, 0.8, 1.0],
-    'max_leaf_nodes': [None, 10, 20, 30],
-    'min_impurity_decrease': [0.0, 0.01, 0.1]
     }
 
     

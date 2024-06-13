@@ -27,9 +27,12 @@ model, encoder, lb = joblib.load("./model/transformers.pkl")
 
 # Process test data
 X_test, y_test, *_ = process_data(
-    test, categorical_features=cat_features, 
+    test, 
+    categorical_features=cat_features, 
     label="salary", 
-    training=False, encoder=encoder, lb=lb
+    training=False, 
+    encoder=encoder, 
+    lb=lb
 )
 
 # Perform inference
@@ -44,8 +47,7 @@ for feature in cat_features:
     for val in unique_vals:
         mask = test[feature] == val
         if mask.any():
-            precision, recall,fbeta = compute_model_metrics(y_test[mask], 
-                                                            y_pred[mask])
+            precision, recall, fbeta = compute_model_metrics(y_test[mask], y_pred[mask])
             list_res.append({
                 "feature": feature,
                 "val": val,
