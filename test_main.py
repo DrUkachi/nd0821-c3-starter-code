@@ -1,3 +1,4 @@
+import os
 import pytest
 import json
 import joblib
@@ -5,8 +6,19 @@ import pandas as pd
 from fastapi.testclient import TestClient
 from main import app, Features  # Assuming your FastAPI script is in main.py
 
+cwd = os.getcwd()
+parent_dir = os.path.dirname("model")
+filepath = os.join()
+
+# Name of the file you want to locate
+filename = "transformers.pkl"
+
+# Construct the full path to the file in the parent directory
+file_path = os.path.join(parent_dir, filename)
+
+
 # Load model and transformers for testing
-model, encoder, lb = joblib.load("./model/transformer.pkl")
+model, encoder, lb = joblib.load(file_path)
 cat_features = [f for (f, t) in Features.__annotations__.items() if t == str]
 
 client = TestClient(app)

@@ -13,18 +13,16 @@ from ml.model import train_model, inference, compute_model_metrics
 
 # Get the current working directory
 cwd = os.getcwd()
-print("Current working directory:", cwd)
 
 # Move up to the parent directory
 parent_dir = os.path.dirname(cwd)
-print("Parent directory:", parent_dir)
 
 # Name of the file you want to locate
 filename = "data/census.csv"
 
 # Construct the full path to the file in the parent directory
 file_path = os.path.join(parent_dir, filename)
-print("Full path to the file:", file_path)
+
 
 # Add code to load in the data.
 data = pd.read_csv(file_path, sep=", ", engine="python")
