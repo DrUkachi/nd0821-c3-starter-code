@@ -17,16 +17,16 @@ jobs:
           python-version: 3.9
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: AKIAVMSE2SEDOIX5PR7P
-          aws-secret-access-key: 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
-          aws-region: us-east-1
-      - name: Setup DVC
-        uses: iterative/setup-dvc@v1
-      - name: Pull data from DVC
-        run: dvc pull data -R
+      # - name: Configure AWS credentials
+      #  uses: aws-actions/configure-aws-credentials@v1
+      #  with:
+      #    aws-access-key-id: AKIAVMSE2SEDOIX5PR7P
+      #    aws-secret-access-key: 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
+      #    aws-region: us-east-1
+    #  - name: Setup DVC
+    #    uses: iterative/setup-dvc@v1
+    #  - name: Pull data from DVC
+    #    run: dvc pull data -R
       - name: Run Flake8
         run: flake8
       - name: Run pytest
