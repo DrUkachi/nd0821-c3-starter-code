@@ -75,7 +75,7 @@ async def hello():
 cwd = os.getcwd()
 
 # Name of the file you want to locate
-filename = r"model\transformers.pkl"
+filename = "model/transformers.pkl"
 
 # Construct the full path to the file in the parent directory
 file_path = os.path.join(cwd, filename)
