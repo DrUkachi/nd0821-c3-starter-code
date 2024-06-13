@@ -51,7 +51,7 @@ def test_post_prediction(setup, example_index, expected_output):
 
 
 
-def test_invalid_input(setup):
+def test_invalid_input():
     # Test the "/predict" endpoint with invalid input data
 
     invalid_data = {
@@ -74,9 +74,9 @@ def test_invalid_input(setup):
     response = client.post("/predict", json=invalid_data)
     assert response.status_code == 422  # Expecting Unprocessable Entity status code for invalid input
 
-def test_missing_fields(setup):
+def test_missing_fields():
     # Test the "/predict" endpoint with missing fields in input data
-    model, encoder, lb, cat_features = setup
+    
 
     missing_data = {
         "age": 39,
