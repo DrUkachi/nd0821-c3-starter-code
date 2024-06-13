@@ -15,6 +15,7 @@ filename = "transformers.pkl"
 
 # Construct the full path to the file in the parent directory
 file_path = os.path.join(parent_dir, filename)
+print(file_path)
 
 
 # Load model and transformers for testing
