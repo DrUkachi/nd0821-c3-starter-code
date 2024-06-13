@@ -11,10 +11,6 @@ cat_features = [f for (f, t) in Features.__annotations__.items() if t == str]
 
 client = TestClient(app)
 
-@pytest.fixture(scope="module")
-def setup():
-    # Setup function to initialize resources or state for testing
-    return model, encoder, lb, cat_features
 
 def test_root_endpoint():
     # Test the root endpoint "/"
@@ -22,20 +18,12 @@ def test_root_endpoint():
     assert response.status_code == 200
     assert response.json() == "This is the Census Bureau Classifier API"
 
-
-@pytest.fixture(scope="module")
-def setup():
-    # Setup function to initialize resources or state for testing
-    # Load necessary resources or configurations
-    return Features.model_config["json_schema"]["examples"]
-
 @pytest.mark.parametrize("example_index, expected_output", [
     (0, "<=50K"),
     (1, ">50K"),
 ])
-
-def test_post_prediction(setup, example_index, expected_output):
-    examples = setup
+def test_post_prediction(example_index, expected_output):
+    examples = Features.model_config["json_schema"]["examples"]
 
     # Convert example data to JSON string
     data = json.dumps(examples[example_index])
@@ -49,11 +37,8 @@ def test_post_prediction(setup, example_index, expected_output):
     # Assert the predicted output matches the expected output
     assert response.json() == expected_output, f"Expected {expected_output} but got {response.json()}"
 
-
-
 def test_invalid_input():
     # Test the "/predict" endpoint with invalid input data
-
     invalid_data = {
         "age": "invalid",
         "workclass": "Self-emp-not-inc",
@@ -76,8 +61,6 @@ def test_invalid_input():
 
 def test_missing_fields():
     # Test the "/predict" endpoint with missing fields in input data
-    
-
     missing_data = {
         "age": 39,
         "workclass": "State-gov",
