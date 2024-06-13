@@ -6,16 +6,22 @@ from starter.ml.model import train_model, compute_model_metrics, inference
 
 def test_train_model():
     # Generate synthetic data
-    X, y = make_classification(n_samples=1000, n_features=10, random_state=42)
+    X, y = make_classification(n_samples=1000, 
+                               n_features=10, 
+                               random_state=42)
 
     # Split data into train and test sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, 
+                                                        y, 
+                                                        test_size=0.2, 
+                                                        random_state=42)
 
     # Train the model
     model = train_model(X_train, y_train)
 
     # Validate the model
-    assert hasattr(model, 'best_estimator_'), "GridSearchCV should have best_estimator_ attribute"
+    assert hasattr(model, 
+        'best_estimator_'), "GridSearchCV should have best_estimator_ attribute"
     assert model.best_score_ > 0, "GridSearchCV should have non-zero best_score_"
 
 
