@@ -27,7 +27,7 @@ def test_root_endpoint():
     # Test the root endpoint "/"
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == "This is the Census Bureau Classifier API"
+    assert response.json() == "Welcome! This is the Census Bureau Classifier API"
 
 @pytest.mark.parametrize("example_index, expected_output", [
     (0, "<=50K"),
