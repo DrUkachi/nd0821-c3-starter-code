@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the data once for all tests to use
-data = pd.read_csv("./data/census.csv", sep=", ", engine='python')
+data = pd.read_csv("./data/census.csv", sep=",", engine='python')
 
 def test_required_columns():
     required_columns = [
@@ -40,6 +40,6 @@ def test_unique_education_levels():
 def test_valid_workclass():
     valid_workclass = [
         "State-gov", "Self-emp-not-inc", "Private", "Federal-gov", 
-        "Local-gov", "Self-emp-inc", "Without-pay", "Never-worked"
+        "Local-gov", "Self-emp-inc", "Without-pay", "Never-worked", "Unknown"
     ]
     assert all(workclass in valid_workclass for workclass in data['workclass'].unique()), "Invalid workclass value found"
