@@ -20,9 +20,9 @@ def train_model(X_train, y_train):
         Trained machine learning model.
     """
     parameters = {
-        'n_estimators': [200, 500, 1000],
-        'learning_rate': [0.01, 0.05, 0.1],
-        'max_depth': [5, 7, 10],
+        'n_estimators': [500, 1000],
+        'learning_rate': [0.05, 0.1],
+        'max_depth': [5, 7],
     }
 
     f1_score = make_scorer(fbeta_score, beta=1, zero_division=1)
