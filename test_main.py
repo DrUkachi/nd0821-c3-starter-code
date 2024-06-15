@@ -28,7 +28,7 @@ def test_post_prediction(example_index, expected_output):
     data = json.dumps(examples[example_index])
     response = client.post("/predict", data=data)
     assert response.status_code == 200, f"Expected status code 200 but got {response.status_code}"
-    assert "prediction" in response.json(), f"Response JSON does not contain 'prediction'"
+    assert "prediction" in response.json(), "Response JSON does not contain 'prediction'."
     assert response.json()["prediction"] in ["<=50K", ">50K"], f"Expected '<=50K' or '>50K' but got {response.json()['prediction']}"
 
 def test_invalid_input():
