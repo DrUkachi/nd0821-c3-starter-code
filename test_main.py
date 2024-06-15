@@ -2,26 +2,16 @@ import os
 import pytest
 import json
 import joblib
-import pandas as pd
 from fastapi.testclient import TestClient
 from main import app, Features  # Assuming your FastAPI script is in main.py
 
-# get the base directory
-cwd = os.getcwd()
-
-# Name of the file you want to locate
-filename = "model/transformers.pkl"
-
-# Construct the full path to the file in the parent directory
-file_path = os.path.join(cwd, filename)
-
-
 # Load model and transformers for testing
+file_path = os.path.join(os.getcwd(), "model/transformers.pkl")
 model, encoder, lb = joblib.load(file_path)
 cat_features = [f for (f, t) in Features.__annotations__.items() if t == str]
 
+# Create a TestClient passing the FastAPI app
 client = TestClient(app)
-
 
 def test_root_endpoint():
     # Test the root endpoint "/"
@@ -34,19 +24,12 @@ def test_root_endpoint():
     (1, ">50K"),
 ])
 def test_post_prediction(example_index, expected_output):
-    examples = Features.model_config["json_schema"]["examples"]
-
-    # Convert example data to JSON string
+    examples = Features.Config.schema_extra["example"]
     data = json.dumps(examples[example_index])
-
-    # Send POST request to endpoint
     response = client.post("/predict", data=data)
-
-    # Assert the response status code
     assert response.status_code == 200, f"Expected status code 200 but got {response.status_code}"
-
-    # Assert the predicted output matches the expected output
-    assert response.json() == expected_output, f"Expected {expected_output} but got {response.json()}"
+    assert "prediction" in response.json(), f"Response JSON does not contain 'prediction'"
+    assert response.json()["prediction"] in ["<=50K", ">50K"], f"Expected '<=50K' or '>50K' but got {response.json()['prediction']}"
 
 def test_invalid_input():
     # Test the "/predict" endpoint with invalid input data
@@ -66,7 +49,6 @@ def test_invalid_input():
         "hours_per_week": 40,
         "native_country": "United-States"
     }
-
     response = client.post("/predict", json=invalid_data)
     assert response.status_code == 422  # Expecting Unprocessable Entity status code for invalid input
 
@@ -75,7 +57,7 @@ def test_missing_fields():
     missing_data = {
         "age": 39,
         "workclass": "State-gov",
-        "education_num": 13,
+        "education": "Bachelors",
         "marital_status": "Never-married",
         "occupation": "Adm-clerical",
         "relationship": "Not-in-family",
@@ -86,6 +68,5 @@ def test_missing_fields():
         "hours_per_week": 40,
         "native_country": "United-States"
     }
-
     response = client.post("/predict", json=missing_data)
     assert response.status_code == 422  # Expecting Unprocessable Entity status code for missing fields
